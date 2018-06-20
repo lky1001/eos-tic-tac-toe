@@ -19,3 +19,14 @@ $ npm start
 ```
 $ npm run build
 ```
+
+## contract compile
+```
+$ eosiocpp -o tic_tac_toe.wast tic_tac_toe.cpp
+$ eosiocpp -g tic_tac_toe.abi tic_tac_toe.cpp
+```
+
+## contract deploy on tic.tac.toe account
+```
+$ cleos set contract tic.tac.toe tic_tac_toe
+``` 
