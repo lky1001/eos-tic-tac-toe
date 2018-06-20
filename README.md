@@ -20,9 +20,13 @@ $ npm start
 $ npm run build
 ```
 
-## contract compile
+## create ABI
 ```
 $ eosiocpp -o tic_tac_toe.wast tic_tac_toe.cpp
+```
+
+## contract compile
+```
 $ eosiocpp -g tic_tac_toe.abi tic_tac_toe.cpp
 ```
 
