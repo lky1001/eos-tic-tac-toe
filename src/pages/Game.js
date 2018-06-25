@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Button from "@material-ui/core/Button"
+import Board from '../components/Board';
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -99,7 +100,12 @@ class Game extends Component {
             }
             
             console.log(data);
-        }).catch((err) => { console.log(err) });;
+        }).catch((err) => { 
+            console.log(err);
+            this.setState({
+                isLoading: false
+            });
+        });
     };
 
     createGame = () => {
@@ -108,7 +114,89 @@ class Game extends Component {
         });
 
         this.getGameInfo();
-    }
+    };
+
+    move = (x, y) => {
+        let i = x * 3 + y;
+
+        this.setState({
+            isLoading: true
+        });
+
+        let move = {
+            challenger: this.state.challenger,
+            host: this.state.host,
+            by: this.state.turn,
+            mvt: {
+                row: x,
+                column: y
+            }
+        };
+
+        this.eos.contract(CONTRACT_NAME).then((contract) => {
+            contract.move(
+                this.state.challenger,
+                this.state.host,
+                this.state.turn,
+                { row: x, column: y },
+                { authorization: [move.challenger, move.host,move.by] } 
+            ).then((res) => { 
+                this.setState({ 
+                    isLoading: false 
+                });
+
+                this.getGameInfo();
+            }).catch((err) => { 
+                console.log(err);
+                this.setState({
+                    isLoading: false
+                });
+            });
+        });
+    };
+
+    resetGame = () => {
+        this.setState({
+            isLoading: true
+        });
+
+        this.eos.contract(CONTRACT_NAME).then((contract) => {
+            contract.restart(
+              this.state.challenger,
+              this.state.host,
+              this.state.host,
+              { authorization: [this.state.challenger, this.state.host,this.state.host] }
+            ).then((res) => { 
+               
+            }).catch((err) => { 
+                console.log(err);
+                this.setState({
+                    isLoading: false
+                });
+            });
+        });
+    };
+
+    closeGame = () => {
+        this.setState({
+            isLoading: true
+        });
+
+        this.eos.contract(CONTRACT_NAME).then((contract) => {
+            contract.close(
+                this.state.challenger,
+                this.state.host,
+                { authorization: [this.state.challenger, this.state.host,this.state.host] }
+            ).then((res) => { 
+               
+            }).catch((err) => { 
+                console.log(err);
+                this.setState({
+                    isLoading: false
+                });
+            });
+        });
+    };
 
     render() {
         return(
@@ -124,16 +212,11 @@ class Game extends Component {
                         Host : {this.state.host}, &nbsp; Challenger : {this.state.challenger} <br/><br/>
                         Turn : {this.state.turn} <br/><br/>
                         <div className="game-board">
-                            {this.state.board[0]}&nbsp;
-                            {this.state.board[1]}&nbsp;
-                            {this.state.board[2]}<br/>
-                            {this.state.board[3]}&nbsp;
-                            {this.state.board[4]}&nbsp;
-                            {this.state.board[5]}<br/>
-                            {this.state.board[6]}&nbsp;
-                            {this.state.board[7]}&nbsp;
-                            {this.state.board[8]}
+                            <Board board={this.state.board}
+                                handleClick={this.move} />
                         </div>
+                        <Button name="start" onClick={this.resetGame} variant="contained" color="primary">Reset Game</Button>
+                        <Button name="start" onClick={this.closeGame} variant="contained" color="primary">Close Game</Button>
                     </div>
                 }
                 {

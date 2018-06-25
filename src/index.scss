@@ -6,13 +6,28 @@ body {
 
 .game-board {
   width: 100px;
-  height: 100px;
+  height: 110px;
   background-color: #c9c9c9;
   margin:0 50px 0 50px;
 }
 
 .player {
 
+}
+
+.board-row {
+  display: flex;
+}
+
+.board-cell {
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+  background-color: #c90000;
+}
+
+.cell-text {
+  margin-top: 7px;
 }
 
 .player-info-container {
