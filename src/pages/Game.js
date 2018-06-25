@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from "@material-ui/core/Button"
 import EOS from 'eosjs';
 
 // eos contract account
@@ -31,7 +32,9 @@ class Game extends Component {
     }
 
     componentDidMount() {
-        this.state.isLoading = true;
+        this.setState({
+            state:true
+        });
         this.getGameInfo();
     }
 
@@ -94,7 +97,7 @@ class Game extends Component {
         return(
             <div>
                 Tic Tac Toe<br /><br />
-                <button name="start" onClick={this.createGame}>Create Game</button>
+                <Button name="start" onClick={this.createGame} variant="contained" color="primary">Create Game</Button>
             </div>
         );
     };
