@@ -3,3 +3,31 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.game-board {
+  width: 100px;
+  height: 100px;
+  background-color: #c9c9c9;
+  margin:0 50px 0 50px;
+}
+
+.player {
+
+}
+
+.player-info-container {
+  width: 255px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.player-field {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+.field-margin {
+  margin-left: 10px;
+  margin-right: 10px;
+}
