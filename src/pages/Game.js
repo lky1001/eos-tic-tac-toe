@@ -12,14 +12,64 @@ const EOS_CONFIG = {
     httpEndpoint: 'http://127.0.0.1:8888'
 };
 
+const BOARD_SIZE = 9;
+
 class Game extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            challenger: '',
+            host: '',
+            trun: '',
+            winner: '',
+            board: [],
+            isLoading: false
+        };
 
         this.eos = EOS(EOS_CONFIG);
     }
+
+    componentDidMount() {
+        this.state.isLoading = true;
+        this.getGameInfo();
+    }
+
+    getGameInfo = () => {
+            this.eos.getTableRows(true, 'tic.tac.toe', 'initb','games').then((data) => {
+                let board = [];
+
+                if (!data.rows) {
+                    for (let i = 0; i < BOARD_SIZE; i++) {
+                        board[i] = 0;
+                    }
+
+                    this.setState({
+                        challenger: '',
+                        host: '',
+                        trun: '',
+                        winner: '',
+                        board: board,
+                        isLoading: false
+                    });
+                } else {
+                    for (let i = 0; i < BOARD_SIZE; i++) {
+                        board.push(data.rows[0].board[i]);
+                    }
+
+                    this.setState({
+                        challenger: data.rows[0].challenger,
+                        host: data.rows[0].host,
+                        trun: data.rows[0].turn,
+                        winner: data.rows[0].winner,
+                        board: board,
+                        isLoading: false
+                    });
+                }
+                
+                console.log(data);
+            });
+    };
 
     createGame = () => {
         let host = 'initb';
