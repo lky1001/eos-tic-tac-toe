@@ -93,6 +93,8 @@ class Game extends Component {
                     board: board,
                     isLoading: false
                 });
+
+                checkWinner(this.state.board);
             }
             
             console.log(data);
@@ -199,6 +201,10 @@ class Game extends Component {
                 });
             });
         });
+    };
+
+    checkWinner = (board) => {
+        // todo
     };
 
     render() {
