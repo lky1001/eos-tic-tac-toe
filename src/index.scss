@@ -8,11 +8,8 @@ body {
   width: 100px;
   height: 110px;
   background-color: #c9c9c9;
-  margin:0 50px 0 50px;
-}
-
-.player {
-
+  margin: auto;
+  margin-bottom: 50px;
 }
 
 .board-row {
@@ -23,7 +20,7 @@ body {
   width: 30px;
   height: 30px;
   margin: 3px;
-  background-color: #c90000;
+  background-color: #ffa2a2;
 }
 
 .cell-text {

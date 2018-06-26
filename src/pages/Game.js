@@ -48,19 +48,10 @@ class Game extends Component {
         this.eos.getTableRows(true, CONTRACT_NAME, this.state.host, 'games').then((data) => {
             let board = [];
 
-            if (!data.rows) {
+            if (!data.rows || data.rows.length === 0) {
                 for (let i = 0; i < BOARD_SIZE; i++) {
                     board[i] = 0;
                 }
-
-                this.setState({
-                    isPlay: false,
-                    challenger: '',
-                    host: '',
-                    turn: '',
-                    winner: '',
-                    board: board
-                });
 
                 let host = this.state.host;
                 let challenger = this.state.challenger;
@@ -78,6 +69,11 @@ class Game extends Component {
                     ).then((res) => { 
                         this.setState({
                             isPlay: true,
+                            challenger: challenger,
+                            host: host,
+                            turn: host,
+                            winner: '',
+                            board: board,
                             isLoading: false
                         });
                     })
@@ -155,7 +151,7 @@ class Game extends Component {
         });
     };
 
-    resetGame = () => {
+    restartGame = () => {
         this.setState({
             isLoading: true
         });
@@ -167,7 +163,11 @@ class Game extends Component {
               this.state.host,
               { authorization: [this.state.challenger, this.state.host,this.state.host] }
             ).then((res) => { 
-               
+                this.setState({ 
+                    isLoading: false 
+                });
+
+                this.getGameInfo();
             }).catch((err) => { 
                 console.log(err);
                 this.setState({
@@ -188,7 +188,10 @@ class Game extends Component {
                 this.state.host,
                 { authorization: [this.state.challenger, this.state.host,this.state.host] }
             ).then((res) => { 
-               
+                this.setState({ 
+                    isLoading: false,
+                    isPlay: false
+                });
             }).catch((err) => { 
                 console.log(err);
                 this.setState({
@@ -215,8 +218,11 @@ class Game extends Component {
                             <Board board={this.state.board}
                                 handleClick={this.move} />
                         </div>
-                        <Button name="start" onClick={this.resetGame} variant="contained" color="primary">Reset Game</Button>
-                        <Button name="start" onClick={this.closeGame} variant="contained" color="primary">Close Game</Button>
+                        <Button name="start" onClick={this.restartGame} variant="contained" color="primary">Restart Game</Button> <br /><br />
+                        {
+                            this.state.turn === this.state.host &&
+                            <Button name="start" onClick={this.closeGame} variant="contained" color="primary">Close Game</Button>
+                        }
                     </div>
                 }
                 {
