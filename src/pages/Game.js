@@ -94,7 +94,7 @@ class Game extends Component {
                     isLoading: false
                 });
 
-                checkWinner(this.state.board);
+                this.checkWinner(this.state.board);
             }
             
             console.log(data);
