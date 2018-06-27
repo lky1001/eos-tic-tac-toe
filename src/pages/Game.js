@@ -161,7 +161,7 @@ class Game extends Component {
             }
         };
 
-        this.eos.contract(CONTRACT_NAME).then((contract) => {
+        this.eos.contract(CONTRACT_NAME, requiredFields).then((contract) => {
             contract.move(
                 this.state.challenger,
                 this.state.host,
@@ -188,7 +188,7 @@ class Game extends Component {
             isLoading: true
         });
 
-        this.eos.contract(CONTRACT_NAME).then((contract) => {
+        this.eos.contract(CONTRACT_NAME, requiredFields).then((contract) => {
             contract.restart(
               this.state.challenger,
               this.state.host,
@@ -214,7 +214,7 @@ class Game extends Component {
             isLoading: true
         });
 
-        this.eos.contract(CONTRACT_NAME).then((contract) => {
+        this.eos.contract(CONTRACT_NAME, requiredFields).then((contract) => {
             contract.close(
                 this.state.challenger,
                 this.state.host,
@@ -240,7 +240,6 @@ class Game extends Component {
     getScatterId = () => {
         this.scatter.getIdentity().then(id => {
             if(!id) return false;
-            this.scatter.useIdentity(id.hash);
             console.log('Possible identity', id);
             this.setState({
                 isLogin: true,
