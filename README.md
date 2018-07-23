@@ -40,7 +40,7 @@ $ cleos create account eosio tic.tac.toe EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8Bht
 $ cleos set contract tic.tac.toe tic_tac_toe
 ```
 
-## create test player account
+## create test player account(inita, initb)
 ```
 $ cleos create account eosio inita EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
 
